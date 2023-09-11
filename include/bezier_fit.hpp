@@ -26,6 +26,7 @@ namespace bezierfit {
 	using VECTOR = glm::vec2;
 	using FLOAT = float;
 
+	std::vector<VECTOR> reduce(std::vector<VECTOR> points, FLOAT error = 0.03f);
 	std::vector<std::array<VECTOR, 4>> fit(std::vector<VECTOR> points, FLOAT maxError);
 };
 

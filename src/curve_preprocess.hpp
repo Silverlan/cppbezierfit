@@ -32,16 +32,14 @@ namespace bezierfit
 	public:
 		static constexpr FLOAT EPSILON = 0.000001; // Change the epsilon value as needed for FLOAT type
 
-		static std::vector<glm::vec2> Linearize(const std::vector<glm::vec2>& src, FLOAT md);
+		static std::vector<VECTOR> Linearize(const std::vector<VECTOR>& src, FLOAT md);
 
-		static std::vector<glm::vec2> RemoveDuplicates(const std::vector<glm::vec2>& pts);
+		static std::vector<VECTOR> RemoveDuplicates(const std::vector<VECTOR>& pts);
 
-		static std::vector<glm::vec2> RdpReduce(const std::vector<glm::vec2>& pts, FLOAT error);
+		static std::vector<VECTOR> RdpReduce(const std::vector<VECTOR>& pointList, float epsilon);
 
 	private:
-		static void RdpRecursive(const std::vector<glm::vec2>& pts, FLOAT error, int first, int last, std::vector<int>& keepIndex);
-
-		static FLOAT PerpendicularDistance(const glm::vec2& a, const glm::vec2& b, FLOAT abDist, FLOAT aCrossB, const glm::vec2& p);
+		static FLOAT PerpendicularDistance(const VECTOR& p, const VECTOR& lineP1, const VECTOR& lineP2);
 	};
 }
 

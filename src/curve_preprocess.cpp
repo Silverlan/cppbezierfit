@@ -23,23 +23,23 @@
 #include <glm/gtc/epsilon.hpp>
 
 using namespace bezierfit;
-std::vector<glm::vec2> CurvePreprocess::Linearize(const std::vector<glm::vec2>& src, FLOAT md)
+std::vector<VECTOR> CurvePreprocess::Linearize(const std::vector<VECTOR>& src, FLOAT md)
 {
 	if (src.empty())
 		throw std::invalid_argument("src cannot be empty");
 	if (md <= EPSILON)
 		throw std::invalid_argument("md must be greater than epsilon");
 
-	std::vector<glm::vec2> dst;
+	std::vector<VECTOR> dst;
 	if (src.size() > 0)
 	{
-		glm::vec2 pp = src[0];
+		VECTOR pp = src[0];
 		dst.push_back(pp);
 		FLOAT cd = 0;
 		for (size_t ip = 1; ip < src.size(); ip++)
 		{
-			glm::vec2 p0 = src[ip - 1];
-			glm::vec2 p1 = src[ip];
+			VECTOR p0 = src[ip - 1];
+			VECTOR p1 = src[ip];
 			FLOAT td = glm::distance(p0, p1);
 			if (cd + td > md)
 			{
@@ -49,7 +49,7 @@ std::vector<glm::vec2> CurvePreprocess::Linearize(const std::vector<glm::vec2>& 
 				while (rd > md)
 				{
 					rd -= md;
-					glm::vec2 np = glm::mix(p0, p1, (td - rd) / td);
+					VECTOR np = glm::mix(p0, p1, (td - rd) / td);
 					if (!glm::all(glm::epsilonEqual(np, pp, EPSILON)))
 					{
 						dst.push_back(np);
@@ -64,25 +64,25 @@ std::vector<glm::vec2> CurvePreprocess::Linearize(const std::vector<glm::vec2>& 
 			}
 		}
 		// last point
-		glm::vec2 lp = src.back();
+		VECTOR lp = src.back();
 		if (!glm::all(glm::epsilonEqual(pp, lp, EPSILON)))
 			dst.push_back(lp);
 	}
 	return dst;
 }
 
-std::vector<glm::vec2> CurvePreprocess::RemoveDuplicates(const std::vector<glm::vec2>& pts)
+std::vector<VECTOR> CurvePreprocess::RemoveDuplicates(const std::vector<VECTOR>& pts)
 {
 	if (pts.size() < 2)
 		return pts;
 
-	std::vector<glm::vec2> dst;
+	std::vector<VECTOR> dst;
 	dst.reserve(pts.size());
 	dst.push_back(pts[0]);
 	for (size_t i = 1; i < pts.size(); i++)
 	{
-		glm::vec2 cur = pts[i];
-		glm::vec2 prev = dst.back();
+		VECTOR cur = pts[i];
+		VECTOR prev = dst.back();
 		if (!glm::all(glm::epsilonEqual(prev, cur, EPSILON)))
 		{
 			dst.push_back(cur);
@@ -91,64 +91,54 @@ std::vector<glm::vec2> CurvePreprocess::RemoveDuplicates(const std::vector<glm::
 	return dst;
 }
 
-std::vector<glm::vec2> CurvePreprocess::RdpReduce(const std::vector<glm::vec2>& pts, FLOAT error)
+std::vector<VECTOR> CurvePreprocess::RdpReduce(const std::vector<VECTOR>& pointList, float epsilon)
 {
-	if (pts.empty())
-		throw std::invalid_argument("pts cannot be empty");
-	std::vector<glm::vec2> uniquePts = RemoveDuplicates(pts);
-	if (uniquePts.size() < 3)
-		return uniquePts;
+	std::vector<VECTOR> resultList;
+	resultList.reserve(pointList.size() /2);
 
-	std::vector<int> keepIndex;
-	keepIndex.reserve(std::max(uniquePts.size() / 2, static_cast<size_t>(16)));
-	keepIndex.push_back(0);
-	keepIndex.push_back(uniquePts.size() - 1);
-	RdpRecursive(uniquePts, error, 0, uniquePts.size() - 1, keepIndex);
-	std::sort(keepIndex.begin(), keepIndex.end());
-
-	std::vector<glm::vec2> res;
-	res.reserve(keepIndex.size());
-	for (int idx : keepIndex)
-		res.push_back(uniquePts[idx]);
-	return res;
-}
-
-void CurvePreprocess::RdpRecursive(const std::vector<glm::vec2>& pts, FLOAT error, int first, int last, std::vector<int>& keepIndex)
-{
-	int nPts = last - first + 1;
-	if (nPts < 3)
-		return;
-
-	glm::vec2 a = pts[first];
-	glm::vec2 b = pts[last];
-	FLOAT abDist = glm::distance(a, b);
-	FLOAT aCrossB = glm::cross(glm::vec3(a, 0), glm::vec3(b, 0)).z;
-	FLOAT maxDist = error;
-	int split = 0;
-	for (int i = first + 1; i < last - 1; i++)
-	{
-		glm::vec2 p = pts[i];
-		FLOAT pDist = PerpendicularDistance(a, b, abDist, aCrossB, p);
-		if (pDist > maxDist)
-		{
-			maxDist = pDist;
-			split = i;
+	// Find the point with the maximum distance
+	float dmax = 0;
+	int index = 0;
+	for (int i = 1; i < pointList.size() - 1; ++i) {
+		float d = PerpendicularDistance(pointList[i], pointList[0], pointList[pointList.size() - 1]);
+		if (d > dmax) {
+			index = i;
+			dmax = d;
 		}
 	}
+	// If max distance is greater than epsilon, recursively simplify
+	if (dmax > epsilon) {
+		std::vector<VECTOR> pre_part, next_part;
+		pre_part.reserve(index +1);
+		for (int i = 0; i <= index; ++i)
+			pre_part.push_back(pointList[i]);
+		next_part.reserve(pointList.size() -index);
+		for (int i = index; i < pointList.size(); ++i)
+			next_part.push_back(pointList[i]);
+		// Recursive call
+		std::vector<VECTOR> resultList1 = RdpReduce(pre_part, epsilon);
+		std::vector<VECTOR> resultList2 = RdpReduce(next_part, epsilon);
 
-	if (split != 0)
-	{
-		keepIndex.push_back(split);
-		RdpRecursive(pts, error, first, split, keepIndex);
-		RdpRecursive(pts, error, split, last, keepIndex);
+		// combine
+		resultList.insert(resultList.end(), resultList1.begin(), resultList1.end());
+		resultList.insert(resultList.end(), resultList2.begin() + 1, resultList2.end());
 	}
+	else {
+		resultList.push_back(pointList[0]);
+		resultList.push_back(pointList[pointList.size() - 1]);
+	}
+	if (resultList.size() == resultList.capacity())
+		resultList.reserve(pointList.size());
+
+	return resultList;
 }
 
-FLOAT CurvePreprocess::PerpendicularDistance(const glm::vec2& a, const glm::vec2& b, FLOAT abDist, FLOAT aCrossB, const glm::vec2& p)
+FLOAT CurvePreprocess::PerpendicularDistance(const VECTOR& p, const VECTOR& lineP1, const VECTOR& lineP2)
 {
-	FLOAT area = std::abs(aCrossB +
-		a.x * b.y + p.x * a.y -
-		p.x * b.y - a.x * p.y);
-	FLOAT height = area / abDist;
-	return height;
+	VECTOR vec1 = VECTOR(p.x - lineP1.x, p.y - lineP1.y);
+	VECTOR vec2 = VECTOR(lineP2.x - lineP1.x, lineP2.y - lineP1.y);
+	float d_vec2 = sqrt(vec2.x * vec2.x + vec2.y * vec2.y);
+	float cross_product = vec1.x * vec2.y - vec2.x * vec1.y;
+	float d = abs(cross_product / d_vec2);
+	return d;
 }

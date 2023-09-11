@@ -25,9 +25,14 @@
 
 using namespace bezierfit;
 
+std::vector<VECTOR> bezierfit::reduce(std::vector<VECTOR> points, FLOAT error)
+{
+	return CurvePreprocess::RdpReduce(points, error);
+}
+
 std::vector<std::array<VECTOR, 4>> bezierfit::fit(std::vector<VECTOR> data, FLOAT maxError)
 {
-	auto reduced = CurvePreprocess::RdpReduce(data, 2);
+	auto reduced = CurvePreprocess::RdpReduce(data, 0.03f);
 
 	CurveFit curveFit{};
 	auto bezierCurves = curveFit.Fit(reduced, maxError);
