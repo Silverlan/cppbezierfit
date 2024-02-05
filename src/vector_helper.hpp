@@ -20,6 +20,7 @@
 #define __BEZIERFIT_VECTOR_HELPER_HPP__
 
 #include "bezier_fit.hpp"
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/norm.hpp>
 
 namespace bezierfit {
