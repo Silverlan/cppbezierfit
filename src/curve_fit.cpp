@@ -32,6 +32,8 @@ std::vector<VECTOR> bezierfit::reduce(std::vector<VECTOR> points, FLOAT error)
 
 std::vector<std::array<VECTOR, 4>> bezierfit::fit(std::vector<VECTOR> data, FLOAT maxError)
 {
+	if (data.empty())
+		return {};
 	auto reduced = CurvePreprocess::RdpReduce(data, 0.03f);
 
 	CurveFit curveFit{};
