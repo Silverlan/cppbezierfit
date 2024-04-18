@@ -30,6 +30,34 @@ std::vector<VECTOR> bezierfit::reduce(std::vector<VECTOR> points, FLOAT error)
 	return CurvePreprocess::RdpReduce(points, error);
 }
 
+std::pair<VECTOR, VECTOR> bezierfit::calc_four_point_cubic_bezier(const VECTOR& p0, const VECTOR& p1, const VECTOR& p2, const VECTOR& p3)
+{
+	// See https://apoorvaj.io/cubic-bezier-through-four-points/
+	constexpr auto alpha = 0.5f;
+	auto d1 = powf(glm::distance(p1, p0), alpha);
+	auto d2 = powf(glm::distance(p2, p1), alpha);
+	auto d3 = powf(glm::distance(p3, p2), alpha);
+
+	auto a = d1 * d1;
+	auto b = d2 * d2;
+	auto c = (2.f * d1 * d1) + (3 * d1 * d2) + (d2 * d2);
+	auto d = 3.f * d1 * (d1 + d2);
+	VECTOR t1{
+		(a * p2.x - b * p0.x + c * p1.x) / d,
+		(a * p2.y - b * p0.y + c * p1.y) / d
+	};
+
+	a = d3 * d3;
+	b = d2 * d2;
+	c = (2 * d3 * d3) + (3 * d3 * d2) + (d2 * d2);
+	d = 3 * d3 * (d3 + d2);
+	auto t2 = VECTOR{
+		(a * p1.x - b * p3.x + c * p2.x) / d,
+		(a * p1.y - b * p3.y + c * p2.y) / d
+	};
+	return { t1, t2 };
+}
+
 std::vector<std::array<VECTOR, 4>> bezierfit::fit(std::vector<VECTOR> data, FLOAT maxError)
 {
 	if (data.empty())

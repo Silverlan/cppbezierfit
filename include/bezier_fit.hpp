@@ -28,6 +28,7 @@ namespace bezierfit {
 
 	std::vector<VECTOR> reduce(std::vector<VECTOR> points, FLOAT error = 0.03f);
 	std::vector<std::array<VECTOR, 4>> fit(std::vector<VECTOR> points, FLOAT maxError);
+	std::pair<VECTOR, VECTOR> calc_four_point_cubic_bezier(const VECTOR& v0, const VECTOR& v1, const VECTOR& v2, const VECTOR& v3);
 };
 
 #endif
