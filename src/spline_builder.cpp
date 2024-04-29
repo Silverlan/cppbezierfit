@@ -52,7 +52,7 @@ bool SplineBuilder::Add(const glm::vec2& p)
 	else
 	{
 		// Last curve updated
-		assert(res.FirstChangedIndex == curves.Count() - 1);
+        assert(res.FirstChangedIndex() == curves.size() - 1);
 		_spline.Update(_spline.Curves().size() - 1, curves[curves.size() - 1]);
 	}
 
