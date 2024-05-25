@@ -17,10 +17,11 @@
 #ifndef __BEZIER_FIT_HPP__
 #define __BEZIER_FIT_HPP__
 
-#include <glm/glm.hpp>
-#include <glm/vec2.hpp>
+#include <memory>
 #include <vector>
 #include <array>
+
+import glm;
 
 namespace bezierfit {
 	using VECTOR = glm::vec2;

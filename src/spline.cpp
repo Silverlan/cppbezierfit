@@ -19,6 +19,7 @@
 #include "spline.hpp"
 #include "vector_helper.hpp"
 #include <stdexcept>
+#include <cassert>
 
 using namespace bezierfit;
 

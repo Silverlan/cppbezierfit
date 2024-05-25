@@ -20,7 +20,8 @@
 #include <stdexcept>
 #include <vector>
 #include <algorithm>
-#include <glm/gtc/epsilon.hpp>
+
+import glm;
 
 using namespace bezierfit;
 std::vector<VECTOR> CurvePreprocess::Linearize(const std::vector<VECTOR>& src, FLOAT md)
@@ -50,7 +51,7 @@ std::vector<VECTOR> CurvePreprocess::Linearize(const std::vector<VECTOR>& src, F
 				{
 					rd -= md;
 					VECTOR np = glm::mix(p0, p1, (td - rd) / td);
-					if (!glm::all(glm::epsilonEqual(np, pp, EPSILON)))
+					if (!glm::all(glm::gtx::epsilonEqual(np, pp, EPSILON)))
 					{
 						dst.push_back(np);
 						pp = np;
@@ -65,7 +66,7 @@ std::vector<VECTOR> CurvePreprocess::Linearize(const std::vector<VECTOR>& src, F
 		}
 		// last point
 		VECTOR lp = src.back();
-		if (!glm::all(glm::epsilonEqual(pp, lp, EPSILON)))
+		if (!glm::all(glm::gtx::epsilonEqual(pp, lp, EPSILON)))
 			dst.push_back(lp);
 	}
 	return dst;

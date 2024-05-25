@@ -18,9 +18,9 @@
 
 
 #include "vector_helper.hpp"
-#include <glm/gtc/constants.hpp>
-#include <glm/gtx/norm.hpp>
 #include <cmath>
+
+import glm;
 
 using namespace bezierfit;
 
@@ -33,7 +33,7 @@ FLOAT VectorHelper::Distance(const glm::vec2& a, const glm::vec2& b)
 
 FLOAT VectorHelper::DistanceSquared(const glm::vec2& a, const glm::vec2& b)
 {
-	return glm::distance2(a, b);
+	return glm::gtx::distance2(a, b);
 }
 
 FLOAT VectorHelper::Dot(const glm::vec2& a, const glm::vec2& b)
@@ -53,7 +53,7 @@ FLOAT VectorHelper::Length(const glm::vec2& v)
 
 FLOAT VectorHelper::LengthSquared(const glm::vec2& v)
 {
-	return glm::length2(v);
+	return glm::gtx::length2(v);
 }
 
 glm::vec2 VectorHelper::Lerp(const glm::vec2& a, const glm::vec2& b, FLOAT amount)

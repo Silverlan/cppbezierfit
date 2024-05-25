@@ -23,7 +23,8 @@
 #include <algorithm>
 #include <stdexcept>
 #include <string>
-#include <glm/gtc/epsilon.hpp>
+
+import glm;
 
 namespace bezierfit
 {
