@@ -16,12 +16,14 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#include "curve_fit.hpp"
-#include "curve_preprocess.hpp"
+module;
+
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <algorithm>
+
+module bezierfit;
 
 using namespace bezierfit;
 

@@ -5,7 +5,6 @@ pr_add_library(${PROJ_NAME} STATIC)
 
 pr_add_external_dependency(${PROJ_NAME} glm HEADER_ONLY PRIVATE)
 
-pr_add_headers(${PROJ_NAME} "include/")
-pr_add_sources(${PROJ_NAME} "src/")
+pr_init_module(${PROJ_NAME})
 
 pr_finalize(${PROJ_NAME})

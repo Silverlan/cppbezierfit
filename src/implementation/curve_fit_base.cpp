@@ -16,8 +16,7 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#include "curve_fit.hpp"
-#include "vector_helper.hpp"
+module bezierfit;
 
 using namespace bezierfit;
 

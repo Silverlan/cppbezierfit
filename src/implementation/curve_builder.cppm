@@ -16,11 +16,13 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#ifndef __BEZIERFIT_CURVE_BUILDER_HPP__
-#define __BEZIERFIT_CURVE_BUILDER_HPP__
+module;
 
-#include "curve_fit.hpp"
 #include <vector>
+
+export module bezierfit:curve_builder;
+
+import :curve_fit;
 
 namespace bezierfit
 {
@@ -69,5 +71,3 @@ namespace bezierfit
 		std::vector<CubicBezier>::iterator end();
 	};
 };
-
-#endif

@@ -16,46 +16,47 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#ifndef __BEZIERFIT_CUBIC_BEZIER_HPP__
-#define __BEZIERFIT_CUBIC_BEZIER_HPP__
+module;
 
-#include "bezier_fit.hpp"
-#include <string>
+#include <vector>
+
+export module bezierfit:spline;
+
+import :cubic_bezier;
 
 namespace bezierfit
 {
-	class CubicBezier
+	class Spline
 	{
 	public:
-		// Control points
-		VECTOR p0;
-		VECTOR p1;
-		VECTOR p2;
-		VECTOR p3;
+		static const int MIN_SAMPLES_PER_CURVE = 8;
+		static const int MAX_SAMPLES_PER_CURVE = 1024;
+		static const FLOAT EPSILON;
 
-		CubicBezier() = default;
-		CubicBezier(const VECTOR& p0, const VECTOR& p1, const VECTOR& p2, const VECTOR& p3);
-		CubicBezier& operator=(const CubicBezier& other) {
-			p0 = other.p0;
-			p1 = other.p1;
-			p2 = other.p2;
-			p3 = other.p3;
-			return *this;
-		}
+		struct SamplePos
+		{
+			int Index;
+			FLOAT Time;
 
-		VECTOR Sample(FLOAT t) const;
+			SamplePos(int curveIndex, FLOAT t) : Index(curveIndex), Time(t) {}
+		};
 
-		VECTOR Derivative(FLOAT t) const;
+		Spline(int samplesPerCurve);
+		Spline(const std::vector<CubicBezier>& curves, int samplesPerCurve);
 
-		VECTOR Tangent(FLOAT t) const;
+		void Add(const CubicBezier& curve);
+		void Update(int index, const CubicBezier& curve);
+		void Clear();
+		FLOAT Length() const;
+		const std::vector<CubicBezier>& Curves() const;
+		glm::vec2 Sample(FLOAT u) const;
+		SamplePos GetSamplePosition(FLOAT u) const;
 
-		std::string ToString() const;
+	private:
+		void UpdateArcLengths(int iCurve);
 
-		// Equality members
-		bool operator==(const CubicBezier& other) const;
-
-		bool operator!=(const CubicBezier& other) const;
+		std::vector<CubicBezier> _curves;
+		std::vector<FLOAT> _arclen;
+		int _samplesPerCurve;
 	};
 }
-
-#endif

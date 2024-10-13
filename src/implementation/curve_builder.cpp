@@ -16,14 +16,16 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
+module;
+
 #include <cmath>
 #include <vector>
 #include <algorithm>
 #include <cassert>
 #include <iterator>
 #include <iostream>
-#include "curve_builder.hpp"
-#include "vector_helper.hpp"
+
+module bezierfit;
 
 using namespace bezierfit;
 

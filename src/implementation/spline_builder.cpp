@@ -16,9 +16,12 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#include "spline_builder.hpp"
+module;
+
 #include <vector>
 #include <cassert>
+
+module bezierfit;
 
 using namespace bezierfit;
 

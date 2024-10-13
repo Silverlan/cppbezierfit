@@ -16,11 +16,15 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#include "curve_preprocess.hpp"
+module;
+
 #include <stdexcept>
 #include <vector>
 #include <algorithm>
-#include <glm/gtc/epsilon.hpp>
+
+module bezierfit;
+
+import "interface/glm_wrapper.hpp";
 
 using namespace bezierfit;
 std::vector<VECTOR> CurvePreprocess::Linearize(const std::vector<VECTOR>& src, FLOAT md)

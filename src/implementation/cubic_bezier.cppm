@@ -16,29 +16,46 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#ifndef __BEZIERFIT_VECTOR_HELPER_HPP__
-#define __BEZIERFIT_VECTOR_HELPER_HPP__
+module;
 
-#include "bezier_fit.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/norm.hpp>
+#include <string>
 
-namespace bezierfit {
-	class VectorHelper
+export module bezierfit:cubic_bezier;
+
+import :vector_helper;
+
+namespace bezierfit
+{
+	class CubicBezier
 	{
 	public:
-		static const FLOAT EPSILON;
-		static FLOAT Distance(const glm::vec2& a, const glm::vec2& b);
-		static FLOAT DistanceSquared(const glm::vec2& a, const glm::vec2& b);
-		static FLOAT Dot(const glm::vec2& a, const glm::vec2& b);
-		static glm::vec2 Normalize(const glm::vec2& v);
-		static FLOAT Length(const glm::vec2& v);
-		static FLOAT LengthSquared(const glm::vec2& v);
-		static glm::vec2 Lerp(const glm::vec2& a, const glm::vec2& b, FLOAT amount);
-		static FLOAT GetX(const glm::vec2& v);
-		static FLOAT GetY(const glm::vec2& v);
-		static bool EqualsOrClose(const glm::vec2& v1, const glm::vec2& v2);
-	};
-};
+		// Control points
+		VECTOR p0;
+		VECTOR p1;
+		VECTOR p2;
+		VECTOR p3;
 
-#endif
+		CubicBezier() = default;
+		CubicBezier(const VECTOR& p0, const VECTOR& p1, const VECTOR& p2, const VECTOR& p3);
+		CubicBezier& operator=(const CubicBezier& other) {
+			p0 = other.p0;
+			p1 = other.p1;
+			p2 = other.p2;
+			p3 = other.p3;
+			return *this;
+		}
+
+		VECTOR Sample(FLOAT t) const;
+
+		VECTOR Derivative(FLOAT t) const;
+
+		VECTOR Tangent(FLOAT t) const;
+
+		std::string ToString() const;
+
+		// Equality members
+		bool operator==(const CubicBezier& other) const;
+
+		bool operator!=(const CubicBezier& other) const;
+	};
+}

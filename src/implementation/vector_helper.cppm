@@ -16,48 +16,27 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#ifndef __BEZIERFIT_SPLINE_HPP__
-#define __BEZIERFIT_SPLINE_HPP__
+module;
 
-#include "bezier_fit.hpp"
-#include "cubic_bezier.hpp"
-#include <vector>
+export module bezierfit:vector_helper;
 
-namespace bezierfit
-{
-	class Spline
+import :core;
+import "interface/glm_wrapper.hpp";
+
+namespace bezierfit {
+	class VectorHelper
 	{
 	public:
-		static const int MIN_SAMPLES_PER_CURVE = 8;
-		static const int MAX_SAMPLES_PER_CURVE = 1024;
 		static const FLOAT EPSILON;
-
-		struct SamplePos
-		{
-			int Index;
-			FLOAT Time;
-
-			SamplePos(int curveIndex, FLOAT t) : Index(curveIndex), Time(t) {}
-		};
-
-		Spline(int samplesPerCurve);
-		Spline(const std::vector<CubicBezier>& curves, int samplesPerCurve);
-
-		void Add(const CubicBezier& curve);
-		void Update(int index, const CubicBezier& curve);
-		void Clear();
-		FLOAT Length() const;
-		const std::vector<CubicBezier>& Curves() const;
-		glm::vec2 Sample(FLOAT u) const;
-		SamplePos GetSamplePosition(FLOAT u) const;
-
-	private:
-		void UpdateArcLengths(int iCurve);
-
-		std::vector<CubicBezier> _curves;
-		std::vector<FLOAT> _arclen;
-		int _samplesPerCurve;
+		static FLOAT Distance(const glm::vec2& a, const glm::vec2& b);
+		static FLOAT DistanceSquared(const glm::vec2& a, const glm::vec2& b);
+		static FLOAT Dot(const glm::vec2& a, const glm::vec2& b);
+		static glm::vec2 Normalize(const glm::vec2& v);
+		static FLOAT Length(const glm::vec2& v);
+		static FLOAT LengthSquared(const glm::vec2& v);
+		static glm::vec2 Lerp(const glm::vec2& a, const glm::vec2& b, FLOAT amount);
+		static FLOAT GetX(const glm::vec2& v);
+		static FLOAT GetY(const glm::vec2& v);
+		static bool EqualsOrClose(const glm::vec2& v1, const glm::vec2& v2);
 	};
-}
-
-#endif
+};

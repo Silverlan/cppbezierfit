@@ -1,3 +1,5 @@
+// Copyright (c) 2015 burningmime
+// 
 // This software is provided 'as-is', without any express or implied
 // warranty. In no event will the authors be held liable for any damages
 // arising from the use of this software.
@@ -14,21 +16,31 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#ifndef __BEZIER_FIT_HPP__
-#define __BEZIER_FIT_HPP__
+module;
 
-#include <glm/glm.hpp>
-#include <glm/vec2.hpp>
-#include <vector>
-#include <array>
+#include <algorithm>
+#include <stdexcept>
+#include <string>
 
-namespace bezierfit {
-	using VECTOR = glm::vec2;
-	using FLOAT = float;
+export module bezierfit:curve_preprocess;
 
-	std::vector<VECTOR> reduce(std::vector<VECTOR> points, FLOAT error = 0.03f);
-	std::vector<std::array<VECTOR, 4>> fit(std::vector<VECTOR> points, FLOAT maxError);
-	std::pair<VECTOR, VECTOR> calc_four_point_cubic_bezier(const VECTOR& v0, const VECTOR& v1, const VECTOR& v2, const VECTOR& v3);
-};
+import :core;
+import "interface/glm_wrapper.hpp";
 
-#endif
+namespace bezierfit
+{
+	class CurvePreprocess
+	{
+	public:
+		static constexpr FLOAT EPSILON = 0.000001; // Change the epsilon value as needed for FLOAT type
+
+		static std::vector<VECTOR> Linearize(const std::vector<VECTOR>& src, FLOAT md);
+
+		static std::vector<VECTOR> RemoveDuplicates(const std::vector<VECTOR>& pts);
+
+		static std::vector<VECTOR> RdpReduce(const std::vector<VECTOR>& pointList, float epsilon);
+
+	private:
+		static FLOAT PerpendicularDistance(const VECTOR& p, const VECTOR& lineP1, const VECTOR& lineP2);
+	};
+}

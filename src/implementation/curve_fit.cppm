@@ -16,11 +16,13 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#ifndef __BEZIERFIT_CURVE_FIT_HPP__
-#define __BEZIERFIT_CURVE_FIT_HPP__
+module;
 
-#include "cubic_bezier.hpp"
 #include <vector>
+
+export module bezierfit:curve_fit;
+
+import :cubic_bezier;
 
 namespace bezierfit {
 	const FLOAT EPSILON = std::numeric_limits<FLOAT>::epsilon();
@@ -96,5 +98,3 @@ namespace bezierfit {
 		// Other functions and variables go here...
 	};
 };
-
-#endif

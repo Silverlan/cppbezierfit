@@ -17,10 +17,13 @@
 // 3. This notice may not be removed or altered from any source distribution.
 
 
-#include "vector_helper.hpp"
-#include <glm/gtc/constants.hpp>
-#include <glm/gtx/norm.hpp>
+module;
+
 #include <cmath>
+
+module bezierfit;
+
+import "interface/glm_wrapper.hpp";
 
 using namespace bezierfit;
 

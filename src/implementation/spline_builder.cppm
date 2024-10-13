@@ -16,31 +16,26 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-#ifndef __BEZIERFIT_CURVE_PREPROCESS_HPP__
-#define __BEZIERFIT_CURVE_PREPROCESS_HPP__
+export module bezierfit:spline_builder;
 
-#include "bezier_fit.hpp"
-#include <algorithm>
-#include <stdexcept>
-#include <string>
-#include <glm/gtc/epsilon.hpp>
+import :cubic_bezier;
+import :curve_builder;
+import :spline;
 
-namespace bezierfit
-{
-	class CurvePreprocess
+namespace bezierfit {
+	class SplineBuilder
 	{
 	public:
-		static constexpr FLOAT EPSILON = 0.000001; // Change the epsilon value as needed for FLOAT type
+		SplineBuilder(FLOAT pointDistance, FLOAT error, int samplesPerCurve);
 
-		static std::vector<VECTOR> Linearize(const std::vector<VECTOR>& src, FLOAT md);
-
-		static std::vector<VECTOR> RemoveDuplicates(const std::vector<VECTOR>& pts);
-
-		static std::vector<VECTOR> RdpReduce(const std::vector<VECTOR>& pointList, float epsilon);
+		bool Add(const glm::vec2& p);
+		glm::vec2 Sample(FLOAT u) const;
+		glm::vec2 Tangent(FLOAT u) const;
+		void Clear();
+		const std::vector<CubicBezier>& Curves() const;
 
 	private:
-		static FLOAT PerpendicularDistance(const VECTOR& p, const VECTOR& lineP1, const VECTOR& lineP2);
+		CurveBuilder _builder;
+		Spline _spline;
 	};
-}
-
-#endif
+};
