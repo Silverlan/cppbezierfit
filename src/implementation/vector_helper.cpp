@@ -20,10 +20,9 @@
 module;
 
 #include <cmath>
+#include "glm_wrapper.hpp"
 
 module bezierfit;
-
-import "interface/glm_wrapper.hpp";
 
 using namespace bezierfit;
 

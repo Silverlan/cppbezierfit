@@ -19,6 +19,7 @@
 module;
 
 #include <vector>
+#include "glm_wrapper.hpp"
 
 export module bezierfit:spline;
 

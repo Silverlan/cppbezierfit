@@ -18,10 +18,11 @@
 
 module;
 
+#include "glm_wrapper.hpp"
+
 export module bezierfit:vector_helper;
 
 import :core;
-import "interface/glm_wrapper.hpp";
 
 namespace bezierfit {
 	class VectorHelper

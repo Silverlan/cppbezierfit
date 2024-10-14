@@ -22,6 +22,7 @@ module;
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include "glm_wrapper.hpp"
 
 module bezierfit;
 

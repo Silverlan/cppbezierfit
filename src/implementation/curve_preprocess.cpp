@@ -21,10 +21,9 @@ module;
 #include <stdexcept>
 #include <vector>
 #include <algorithm>
+#include "glm_wrapper.hpp"
 
 module bezierfit;
-
-import "interface/glm_wrapper.hpp";
 
 using namespace bezierfit;
 std::vector<VECTOR> CurvePreprocess::Linearize(const std::vector<VECTOR>& src, FLOAT md)

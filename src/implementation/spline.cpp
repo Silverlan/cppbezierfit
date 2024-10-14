@@ -21,6 +21,7 @@ module;
 #include <stdexcept>
 #include <string>
 #include <cassert>
+#include "glm_wrapper.hpp"
 
 module bezierfit;
 

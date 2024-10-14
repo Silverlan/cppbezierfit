@@ -20,6 +20,7 @@ module;
 
 #include <vector>
 #include <cassert>
+#include "glm_wrapper.hpp"
 
 module bezierfit;
 

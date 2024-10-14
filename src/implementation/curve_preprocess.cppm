@@ -21,11 +21,11 @@ module;
 #include <algorithm>
 #include <stdexcept>
 #include <string>
+#include "glm_wrapper.hpp"
 
 export module bezierfit:curve_preprocess;
 
 import :core;
-import "interface/glm_wrapper.hpp";
 
 namespace bezierfit
 {

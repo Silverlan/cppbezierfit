@@ -4,7 +4,6 @@
 
 export module bezierfit;
 
-export import "interface/glm_wrapper.hpp";
 export import :core;
 import :cubic_bezier;
 import :curve_builder;
