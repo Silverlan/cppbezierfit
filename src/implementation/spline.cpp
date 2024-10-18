@@ -25,6 +25,8 @@ module;
 
 module bezierfit;
 
+import :spline;
+
 using namespace bezierfit;
 
 Spline::Spline(int samplesPerCurve) : _samplesPerCurve(samplesPerCurve)

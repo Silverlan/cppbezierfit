@@ -22,6 +22,8 @@ module;
 
 module bezierfit;
 
+import :curve_fit;
+
 using namespace bezierfit;
 
 VECTOR CurveFitBase::GetLeftTangent(int last)

@@ -25,6 +25,8 @@ module;
 
 module bezierfit;
 
+import :curve_preprocess;
+
 using namespace bezierfit;
 std::vector<VECTOR> CurvePreprocess::Linearize(const std::vector<VECTOR>& src, FLOAT md)
 {

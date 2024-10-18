@@ -24,6 +24,8 @@ module;
 
 module bezierfit;
 
+import :vector_helper;
+
 using namespace bezierfit;
 
 const FLOAT VectorHelper::EPSILON = 1.2e-12f;

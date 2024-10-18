@@ -28,6 +28,8 @@ module;
 
 module bezierfit;
 
+import :curve_builder;
+
 using namespace bezierfit;
 
 const CurveBuilder::AddPointResult bezierfit::CurveBuilder::AddPointResult::NO_CHANGE {};

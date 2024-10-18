@@ -26,6 +26,8 @@ module;
 
 module bezierfit;
 
+import :cubic_bezier;
+
 using namespace bezierfit;
 
 CubicBezier::CubicBezier(const VECTOR& p0, const VECTOR& p1, const VECTOR& p2, const VECTOR& p3)

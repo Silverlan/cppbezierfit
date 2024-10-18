@@ -5,10 +5,3 @@
 export module bezierfit;
 
 export import :core;
-import :cubic_bezier;
-import :curve_builder;
-import :curve_fit;
-import :curve_preprocess;
-import :spline;
-import :spline_builder;
-import :vector_helper;

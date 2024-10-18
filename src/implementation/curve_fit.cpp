@@ -26,6 +26,9 @@ module;
 
 module bezierfit;
 
+import :curve_fit;
+import :curve_preprocess;
+
 using namespace bezierfit;
 
 std::vector<VECTOR> bezierfit::reduce(std::vector<VECTOR> points, FLOAT error)

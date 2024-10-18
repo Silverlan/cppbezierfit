@@ -24,6 +24,8 @@ module;
 
 module bezierfit;
 
+import :spline_builder;
+
 using namespace bezierfit;
 
 SplineBuilder::SplineBuilder(FLOAT pointDistance, FLOAT error, int samplesPerCurve)
