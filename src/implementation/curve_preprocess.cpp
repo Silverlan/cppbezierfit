@@ -144,6 +144,6 @@ FLOAT CurvePreprocess::PerpendicularDistance(const VECTOR& p, const VECTOR& line
 	VECTOR vec2 = VECTOR(lineP2.x - lineP1.x, lineP2.y - lineP1.y);
 	float d_vec2 = sqrt(vec2.x * vec2.x + vec2.y * vec2.y);
 	float cross_product = vec1.x * vec2.y - vec2.x * vec1.y;
-	float d = abs(cross_product / d_vec2);
+	float d = fabs(cross_product / d_vec2);
 	return d;
 }
