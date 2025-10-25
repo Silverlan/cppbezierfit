@@ -24,7 +24,6 @@ module;
 #include <cassert>
 #include <iterator>
 #include <iostream>
-#include "glm_wrapper.hpp"
 
 module bezierfit;
 

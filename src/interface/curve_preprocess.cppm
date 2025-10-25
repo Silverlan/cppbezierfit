@@ -18,26 +18,28 @@
 
 module;
 
-#include "glm_wrapper.hpp"
+#include <algorithm>
+#include <stdexcept>
+#include <string>
 
-export module bezierfit:vector_helper;
+export module bezierfit:curve_preprocess;
 
 import :core;
 
-namespace bezierfit {
-	class VectorHelper
+namespace bezierfit
+{
+	class CurvePreprocess
 	{
 	public:
-		static const FLOAT EPSILON;
-		static FLOAT Distance(const glm::vec2& a, const glm::vec2& b);
-		static FLOAT DistanceSquared(const glm::vec2& a, const glm::vec2& b);
-		static FLOAT Dot(const glm::vec2& a, const glm::vec2& b);
-		static glm::vec2 Normalize(const glm::vec2& v);
-		static FLOAT Length(const glm::vec2& v);
-		static FLOAT LengthSquared(const glm::vec2& v);
-		static glm::vec2 Lerp(const glm::vec2& a, const glm::vec2& b, FLOAT amount);
-		static FLOAT GetX(const glm::vec2& v);
-		static FLOAT GetY(const glm::vec2& v);
-		static bool EqualsOrClose(const glm::vec2& v1, const glm::vec2& v2);
+		static constexpr FLOAT EPSILON = 0.000001; // Change the epsilon value as needed for FLOAT type
+
+		static std::vector<VECTOR> Linearize(const std::vector<VECTOR>& src, FLOAT md);
+
+		static std::vector<VECTOR> RemoveDuplicates(const std::vector<VECTOR>& pts);
+
+		static std::vector<VECTOR> RdpReduce(const std::vector<VECTOR>& pointList, float epsilon);
+
+	private:
+		static FLOAT PerpendicularDistance(const VECTOR& p, const VECTOR& lineP1, const VECTOR& lineP2);
 	};
-};
+}

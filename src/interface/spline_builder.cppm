@@ -18,8 +18,6 @@
 
 module;
 
-#include "glm_wrapper.hpp"
-
 export module bezierfit:spline_builder;
 
 import :cubic_bezier;

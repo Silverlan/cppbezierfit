@@ -18,7 +18,7 @@
 
 module;
 
-#include "glm_wrapper.hpp"
+#include <algorithm>
 
 module bezierfit;
 
@@ -112,12 +112,12 @@ VECTOR CurveFitBase::GetCenterTangent(int first, int last, int split)
 
 	total = tanL + tanR;
 
-	if (glm::length2(total) < EPSILON)
+	if (glm::gtx::length2(total) < EPSILON)
 	{
 		tanL = glm::normalize(_pts[split - 1] - pSplit);
 		tanR = glm::normalize(pSplit - _pts[split + 1]);
 		total = tanL + tanR;
-		return glm::length2(total) < EPSILON ? tanL : glm::normalize(total / 2.0f);
+		return glm::gtx::length2(total) < EPSILON ? tanL : glm::normalize(total / 2.0f);
 	}
 	else
 	{

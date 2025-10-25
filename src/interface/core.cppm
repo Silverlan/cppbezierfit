@@ -1,13 +1,13 @@
 // Copyright (c) 2015 burningmime
-// 
+//
 // This software is provided 'as-is', without any express or implied
 // warranty. In no event will the authors be held liable for any damages
 // arising from the use of this software.
-// 
+//
 // Permission is granted to anyone to use this software for any purpose,
 // including commercial applications, and to alter it and redistribute it
 // freely, subject to the following restrictions:
-// 
+//
 // 1. The origin of this software must not be misrepresented; you must not
 //    claim that you wrote the original software. If you use this software
 //    in a product, an acknowledgement in the product documentation would be
@@ -18,29 +18,18 @@
 
 module;
 
-#include <algorithm>
-#include <stdexcept>
-#include <string>
-#include "glm_wrapper.hpp"
+#include <vector>
+#include <array>
 
-export module bezierfit:curve_preprocess;
+export module bezierfit:core;
 
-import :core;
+export import glm;
 
-namespace bezierfit
-{
-	class CurvePreprocess
-	{
-	public:
-		static constexpr FLOAT EPSILON = 0.000001; // Change the epsilon value as needed for FLOAT type
+export namespace bezierfit {
+	using VECTOR = glm::vec2;
+	using FLOAT = float;
 
-		static std::vector<VECTOR> Linearize(const std::vector<VECTOR>& src, FLOAT md);
-
-		static std::vector<VECTOR> RemoveDuplicates(const std::vector<VECTOR>& pts);
-
-		static std::vector<VECTOR> RdpReduce(const std::vector<VECTOR>& pointList, float epsilon);
-
-	private:
-		static FLOAT PerpendicularDistance(const VECTOR& p, const VECTOR& lineP1, const VECTOR& lineP2);
-	};
-}
+	std::vector<VECTOR> reduce(std::vector<VECTOR> points, FLOAT error = 0.03f);
+	std::vector<std::array<VECTOR, 4>> fit(std::vector<VECTOR> points, FLOAT maxError);
+	std::pair<VECTOR, VECTOR> calc_four_point_cubic_bezier(const VECTOR &v0, const VECTOR &v1, const VECTOR &v2, const VECTOR &v3);
+};

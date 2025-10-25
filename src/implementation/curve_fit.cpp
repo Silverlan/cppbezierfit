@@ -22,7 +22,6 @@ module;
 #include <vector>
 #include <cmath>
 #include <algorithm>
-#include "glm_wrapper.hpp"
 
 module bezierfit;
 

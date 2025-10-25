@@ -21,7 +21,6 @@ module;
 #include <stdexcept>
 #include <vector>
 #include <algorithm>
-#include "glm_wrapper.hpp"
 
 module bezierfit;
 
@@ -55,7 +54,7 @@ std::vector<VECTOR> CurvePreprocess::Linearize(const std::vector<VECTOR>& src, F
 				{
 					rd -= md;
 					VECTOR np = glm::mix(p0, p1, (td - rd) / td);
-					if (!glm::all(glm::epsilonEqual(np, pp, EPSILON)))
+					if (!glm::all(glm::gtc::epsilonEqual(np, pp, EPSILON)))
 					{
 						dst.push_back(np);
 						pp = np;
@@ -70,7 +69,7 @@ std::vector<VECTOR> CurvePreprocess::Linearize(const std::vector<VECTOR>& src, F
 		}
 		// last point
 		VECTOR lp = src.back();
-		if (!glm::all(glm::epsilonEqual(pp, lp, EPSILON)))
+		if (!glm::all(glm::gtc::epsilonEqual(pp, lp, EPSILON)))
 			dst.push_back(lp);
 	}
 	return dst;
@@ -88,7 +87,7 @@ std::vector<VECTOR> CurvePreprocess::RemoveDuplicates(const std::vector<VECTOR>&
 	{
 		VECTOR cur = pts[i];
 		VECTOR prev = dst.back();
-		if (!glm::all(glm::epsilonEqual(prev, cur, EPSILON)))
+		if (!glm::all(glm::gtc::epsilonEqual(prev, cur, EPSILON)))
 		{
 			dst.push_back(cur);
 		}
