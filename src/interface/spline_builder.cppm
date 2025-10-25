@@ -18,6 +18,8 @@
 
 module;
 
+#include <vector>
+
 export module bezierfit:spline_builder;
 
 import :cubic_bezier;

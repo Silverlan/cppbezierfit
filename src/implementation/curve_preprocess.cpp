@@ -21,6 +21,7 @@ module;
 #include <stdexcept>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 
 module bezierfit;
 
