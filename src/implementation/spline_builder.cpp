@@ -18,7 +18,6 @@
 
 module;
 
-#include <vector>
 #include <cassert>
 
 module bezierfit;

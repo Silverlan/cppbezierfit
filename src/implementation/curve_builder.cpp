@@ -18,12 +18,7 @@
 
 module;
 
-#include <cmath>
-#include <vector>
-#include <algorithm>
 #include <cassert>
-#include <iterator>
-#include <iostream>
 
 module bezierfit;
 

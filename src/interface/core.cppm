@@ -18,12 +18,11 @@
 
 module;
 
-#include <vector>
-#include <array>
 
 export module bezierfit:core;
 
 export import glm;
+export import std.compat;
 
 export namespace bezierfit {
 	using VECTOR = glm::vec2;

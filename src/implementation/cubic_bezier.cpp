@@ -18,10 +18,6 @@
 
 module;
 
-#include <cmath>
-#include <string>
-#include <sstream>
-#include <iomanip>
 
 module bezierfit;
 

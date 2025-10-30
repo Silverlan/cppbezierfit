@@ -18,10 +18,7 @@
 
 module;
 
-#include <stdexcept>
-#include <string>
 #include <cassert>
-#include <vector>
 
 module bezierfit;
 

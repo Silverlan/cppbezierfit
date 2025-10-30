@@ -18,10 +18,6 @@
 
 module;
 
-#include <algorithm>
-#include <stdexcept>
-#include <string>
-#include <vector>
 
 export module bezierfit:curve_preprocess;
 

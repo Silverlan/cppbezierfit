@@ -18,7 +18,6 @@
 
 module;
 
-#include <string>
 
 export module bezierfit:cubic_bezier;
 
