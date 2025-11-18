@@ -18,7 +18,6 @@
 
 module;
 
-#include <vector>
 
 export module bezierfit:curve_builder;
 

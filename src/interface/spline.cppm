@@ -18,28 +18,44 @@
 
 module;
 
-#include "glm_wrapper.hpp"
 
-export module bezierfit:spline_builder;
+export module bezierfit:spline;
 
 import :cubic_bezier;
-import :curve_builder;
-import :spline;
 
-namespace bezierfit {
-	class SplineBuilder
+namespace bezierfit
+{
+	class Spline
 	{
 	public:
-		SplineBuilder(FLOAT pointDistance, FLOAT error, int samplesPerCurve);
+		static const int MIN_SAMPLES_PER_CURVE = 8;
+		static const int MAX_SAMPLES_PER_CURVE = 1024;
+		static const FLOAT EPSILON;
 
-		bool Add(const glm::vec2& p);
-		glm::vec2 Sample(FLOAT u) const;
-		glm::vec2 Tangent(FLOAT u) const;
+		struct SamplePos
+		{
+			int Index;
+			FLOAT Time;
+
+			SamplePos(int curveIndex, FLOAT t) : Index(curveIndex), Time(t) {}
+		};
+
+		Spline(int samplesPerCurve);
+		Spline(const std::vector<CubicBezier>& curves, int samplesPerCurve);
+
+		void Add(const CubicBezier& curve);
+		void Update(int index, const CubicBezier& curve);
 		void Clear();
+		FLOAT Length() const;
 		const std::vector<CubicBezier>& Curves() const;
+		glm::vec2 Sample(FLOAT u) const;
+		SamplePos GetSamplePosition(FLOAT u) const;
 
 	private:
-		CurveBuilder _builder;
-		Spline _spline;
+		void UpdateArcLengths(int iCurve);
+
+		std::vector<CubicBezier> _curves;
+		std::vector<FLOAT> _arclen;
+		int _samplesPerCurve;
 	};
-};
+}

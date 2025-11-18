@@ -18,29 +18,27 @@
 
 module;
 
-#include <algorithm>
-#include <stdexcept>
-#include <string>
-#include "glm_wrapper.hpp"
 
-export module bezierfit:curve_preprocess;
+export module bezierfit:spline_builder;
 
-import :core;
+import :cubic_bezier;
+import :curve_builder;
+import :spline;
 
-namespace bezierfit
-{
-	class CurvePreprocess
+namespace bezierfit {
+	class SplineBuilder
 	{
 	public:
-		static constexpr FLOAT EPSILON = 0.000001; // Change the epsilon value as needed for FLOAT type
+		SplineBuilder(FLOAT pointDistance, FLOAT error, int samplesPerCurve);
 
-		static std::vector<VECTOR> Linearize(const std::vector<VECTOR>& src, FLOAT md);
-
-		static std::vector<VECTOR> RemoveDuplicates(const std::vector<VECTOR>& pts);
-
-		static std::vector<VECTOR> RdpReduce(const std::vector<VECTOR>& pointList, float epsilon);
+		bool Add(const glm::vec2& p);
+		glm::vec2 Sample(FLOAT u) const;
+		glm::vec2 Tangent(FLOAT u) const;
+		void Clear();
+		const std::vector<CubicBezier>& Curves() const;
 
 	private:
-		static FLOAT PerpendicularDistance(const VECTOR& p, const VECTOR& lineP1, const VECTOR& lineP2);
+		CurveBuilder _builder;
+		Spline _spline;
 	};
-}
+};

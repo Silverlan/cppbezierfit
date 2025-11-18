@@ -18,46 +18,24 @@
 
 module;
 
-#include <vector>
-#include "glm_wrapper.hpp"
+export module bezierfit:vector_helper;
 
-export module bezierfit:spline;
+import :core;
 
-import :cubic_bezier;
-
-namespace bezierfit
-{
-	class Spline
+namespace bezierfit {
+	class VectorHelper
 	{
 	public:
-		static const int MIN_SAMPLES_PER_CURVE = 8;
-		static const int MAX_SAMPLES_PER_CURVE = 1024;
 		static const FLOAT EPSILON;
-
-		struct SamplePos
-		{
-			int Index;
-			FLOAT Time;
-
-			SamplePos(int curveIndex, FLOAT t) : Index(curveIndex), Time(t) {}
-		};
-
-		Spline(int samplesPerCurve);
-		Spline(const std::vector<CubicBezier>& curves, int samplesPerCurve);
-
-		void Add(const CubicBezier& curve);
-		void Update(int index, const CubicBezier& curve);
-		void Clear();
-		FLOAT Length() const;
-		const std::vector<CubicBezier>& Curves() const;
-		glm::vec2 Sample(FLOAT u) const;
-		SamplePos GetSamplePosition(FLOAT u) const;
-
-	private:
-		void UpdateArcLengths(int iCurve);
-
-		std::vector<CubicBezier> _curves;
-		std::vector<FLOAT> _arclen;
-		int _samplesPerCurve;
+		static FLOAT Distance(const glm::vec2& a, const glm::vec2& b);
+		static FLOAT DistanceSquared(const glm::vec2& a, const glm::vec2& b);
+		static FLOAT Dot(const glm::vec2& a, const glm::vec2& b);
+		static glm::vec2 Normalize(const glm::vec2& v);
+		static FLOAT Length(const glm::vec2& v);
+		static FLOAT LengthSquared(const glm::vec2& v);
+		static glm::vec2 Lerp(const glm::vec2& a, const glm::vec2& b, FLOAT amount);
+		static FLOAT GetX(const glm::vec2& v);
+		static FLOAT GetY(const glm::vec2& v);
+		static bool EqualsOrClose(const glm::vec2& v1, const glm::vec2& v2);
 	};
-}
+};

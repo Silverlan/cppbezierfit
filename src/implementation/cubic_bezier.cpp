@@ -18,11 +18,6 @@
 
 module;
 
-#include <cmath>
-#include <string>
-#include <sstream>
-#include <iomanip>
-#include "glm_wrapper.hpp"
 
 module bezierfit;
 

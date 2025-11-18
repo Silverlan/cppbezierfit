@@ -19,8 +19,6 @@
 
 module;
 
-#include <cmath>
-#include "glm_wrapper.hpp"
 
 module bezierfit;
 
@@ -32,12 +30,12 @@ const FLOAT VectorHelper::EPSILON = 1.2e-12f;
 
 FLOAT VectorHelper::Distance(const glm::vec2& a, const glm::vec2& b)
 {
-	return glm::distance(a, b);
+	return glm::gtx::distance(a, b);
 }
 
 FLOAT VectorHelper::DistanceSquared(const glm::vec2& a, const glm::vec2& b)
 {
-	return glm::distance2(a, b);
+	return glm::gtx::distance2(a, b);
 }
 
 FLOAT VectorHelper::Dot(const glm::vec2& a, const glm::vec2& b)
@@ -57,7 +55,7 @@ FLOAT VectorHelper::Length(const glm::vec2& v)
 
 FLOAT VectorHelper::LengthSquared(const glm::vec2& v)
 {
-	return glm::length2(v);
+	return glm::gtx::length2(v);
 }
 
 glm::vec2 VectorHelper::Lerp(const glm::vec2& a, const glm::vec2& b, FLOAT amount)
