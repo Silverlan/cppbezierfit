@@ -18,7 +18,6 @@
 
 module;
 
-
 export module bezierfit:core;
 
 export import glm;
